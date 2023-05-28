@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="Style.css" />
+</head>
+<body>
+
+
+    <button type="button" onclick="displayallGamesWithRequirements()">Show games with requirements </button>
+    <button type="button" onclick="displayallallGamesWithStudiosAndRequirements()">Show games with studios and requirements</button>
+    <button type="button" onclick="displayallallGamesWithStudios()"> Show games with studios</button>
+    <br />
+    <input type="text" id="cstudio"><button type="button" onclick="displayallGamesWithThisStudio()">Show games with this studio</button>
+    <br />
+    <input type="text" id="cyear"><button type="button" onclick="displayallGamesWithThisYear()">Show games with this realise year</button>
+    <br />
+    <input type="text" id="ccpu"><button type="button" onclick="displayallGamesWithThisCPU()">Show games with this CPU</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th id="nameofnoncrud"></th>
+
+
+            </tr>
+        </thead>
+        <tbody id="noncrudshow">
+        </tbody>
+    </table>
+
+
+
+
+
+    <script src="NonCrudJavaScript.js"></script>
+
+</body>
+</html>
