@@ -10,7 +10,7 @@
     <div class="creator">
         <Label>Games's Name: </Label>
         <input type="text" id="creategamename">
-        
+
         <br />
         <Label>Games's realise year: </Label>
         <input type="text" id="creategameyear">
@@ -20,12 +20,30 @@
         <br />
         <Label>Games's requirements ID: </Label>
         <input type="text" id="creategamereqid">
-        
+
         <button type="button" onclick="creategame()">Create Record</button>
-        
+
 
     </div>
+    <br />
+    <div id="updategameform">
+        <Label>Games's Name: </Label>
+        <input type="text" id="updategamename">
 
+        <br />
+        <Label>Games's realise year: </Label>
+        <input type="text" id="updategameyear">
+        <br />
+        <Label>Games's studio ID: </Label>
+        <input type="text" id="updategamestudioid">
+        <br />
+        <Label>Games's requirements ID: </Label>
+        <input type="text" id="updategamereqid">
+
+        <button type="button" onclick="updategame()">Update Record</button>
+
+
+    </div>
 
     <table>
         <thead>
@@ -39,13 +57,62 @@
             </tr>
         </thead>
         <tbody id="allgamesarea">
- 
+        </tbody>
+    </table>
+    <br />
+    <div id="studiocreatorform">
+        <Label>Studio's Name: </Label>
+        <input type="text" id="createstudioname">
+
+        <br />
+        <Label>Studio's Ceo: </Label>
+        <input type="text" id="createstudioceoname">
+
+
+        <button type="button" onclick="createstudio()">Create Record</button>
+
+
+    </div>
+    <div id="updatestudioform">
+        <Label>Studio's Name: </Label>
+        <input type="text" id="updatestudioname">
+
+        <br />
+        <Label>Studio's Ceo: </Label>
+        <input type="text" id="updatestudioceoname">
+
+
+        <button type="button" onclick="updatestudio()">Update Record</button>
+
+
+
+
+    </div>
+
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Ceo's name</th>
+
+            </tr>
+        </thead>
+        <tbody id="allstudiosarea">
         </tbody>
     </table>
 
 
 
 
+
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
     <script src="Script.js"></script>
 </body>
 </html>

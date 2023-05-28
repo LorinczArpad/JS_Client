@@ -1,7 +1,14 @@
 ﻿*{
     font-size: 1.05em;
 }
-table{
+
+#updategameform {
+    display: none;
+}
+#updatestudioform{
+    display: none;
+}
+table {
     width: 55%;
 }
 table,th,td{
@@ -13,3 +20,4 @@ table{
 th{
     background-color: aqua;
 }
+
