@@ -10,3 +10,6 @@ table,th,td{
 table{
     border-collapse: collapse;
 }
+th{
+    background-color: aqua;
+}

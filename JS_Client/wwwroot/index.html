@@ -7,6 +7,26 @@
 </head>
 <body>
     <h1>Game Catalog</h1>
+    <div class="creator">
+        <Label>Games's Name: </Label>
+        <input type="text" id="creategamename">
+        
+        <br />
+        <Label>Games's realise year: </Label>
+        <input type="text" id="creategameyear">
+        <br />
+        <Label>Games's studio ID: </Label>
+        <input type="text" id="creategamestudioid">
+        <br />
+        <Label>Games's requirements ID: </Label>
+        <input type="text" id="creategamereqid">
+        
+        <button type="button" onclick="creategame()">Create Record</button>
+        
+
+    </div>
+
+
     <table>
         <thead>
             <tr>
@@ -15,6 +35,7 @@
                 <th>Realise Year</th>
                 <th>Studio ID</th>
                 <th>Requirements ID</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody id="allgamesarea">
