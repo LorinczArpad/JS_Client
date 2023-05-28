@@ -8,6 +8,9 @@
 #updatestudioform{
     display: none;
 }
+#minrequpdateform {
+    display: none;
+}
 table {
     width: 55%;
 }

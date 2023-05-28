@@ -1,14 +1,38 @@
 ﻿let allgames = [];
 let allstudios = [];
+let allminreq = [];
+let allGamesWithRequirements = [];
+let allGamesWithStudiosAndRequirements = [];
+let allGamesWithStudios = [];
+let allGamesWithThisStudio = [];
+let allGamesWithThisYear = [];
+let allGamesWithThisCPU = [];
 let connection = null;
 let gameIdtoUpdate = -1;
 let studioIdtoUpdate = -1;
+let minreqIdtoUpdate = -1;
 getallgames();
 getallstudios();
+getallminreq();
+
+
+
+
+
+
 setupSingalR();
 
 
 
+async function getallminreq() {
+    await fetch('http://localhost:60949/MinRequirements')
+        .then(x => x.json())
+        .then(y => {
+            allminreq = y;
+            console.log(allminreq);
+            displayallallminreq();
+        });
+}
 async function getallstudios() {
     await fetch('http://localhost:60949/studio')
         .then(x => x.json())
@@ -18,7 +42,7 @@ async function getallstudios() {
             displayallallstudios();
         });
 }
- async function getallgames(){
+async function getallgames(){
      await fetch('http://localhost:60949/game')
          .then(x => x.json())
          .then(y => {
@@ -27,13 +51,71 @@ async function getallstudios() {
              displayallgames();
          });
 }
+
+async function getallGamesWithThisCPU(cpu) {
+    
+    await fetch('http://localhost:60949/Stat/GamesWithThisCPU/' + cpu)
+            .then(x => x.json())
+            .then(y => {
+                allGamesWithThisCPU = y;
+                console.log(allGamesWithThisCPU);
+
+            });
+
+}
+async function getallGamesWithRequirements() {
+    await fetch('http://localhost:60949/Stat/GamesWithRequirements')
+        .then(x => x.json())
+        .then(y => {
+            allGamesWithRequirements = y;
+            console.log(allGamesWithRequirements);
+
+        });
+}
+async function getallGameWithStudios() {
+    await fetch('http://localhost:60949/Stat/GamesWithStudios')
+        .then(x => x.json())
+        .then(y => {
+            allGamesWithStudios = y;
+            console.log(allGamesWithStudios);
+
+        });
+
+}
+async function getallGamesWithStudiosAndRequirements() {
+    await fetch('http://localhost:60949/Stat/GamesWithStudiosAndRequirements')
+        .then(x => x.json())
+        .then(y => {
+            allGamesWithStudiosAndRequirements = y;
+            console.log(allGamesWithStudiosAndRequirements);
+
+        });
+}
+async function getallGamesWithThisStudio(studio) {
+    await fetch('http://localhost:60949/Stat/GamesWithThisStudio/' + studio)
+        .then(x => x.json())
+        .then(y => {
+            allGamesWithThisStudio = y;
+            console.log(allGamesWithThisStudio);
+
+        });
+}
+async function getallGamesWithThisYear(year) {
+    await fetch('http://localhost:60949/Stat/ReleaseYearSearch/' + year)
+        .then(x => x.json())
+        .then(y => {
+            allGamesWithThisYear = y;
+            console.log(allGamesWithThisYear);
+
+        });
+}
 function setupSingalR() {
 
      connection = new signalR.HubConnectionBuilder()
         .withUrl("http://localhost:60949/hub")
         .configureLogging(signalR.LogLevel.Information)
         .build();
-
+        //games signalR
     connection.on("GameCreated", (user, message) => {
         getallgames();
         });
@@ -42,6 +124,26 @@ function setupSingalR() {
     });
     connection.on("GameUpdated", (user, message) => {
         getallgames();
+    });
+    //studio signalR
+    connection.on("StudioCreated", (user, message) => {
+        getallstudios();
+    });
+    connection.on("StudioDeleted", (user, message) => {
+        getallstudios();
+    });
+    connection.on("StudioUpdated", (user, message) => {
+        getallstudios();
+    });
+    //minreq signalr
+    connection.on("MinRequirementsCreated", (user, message) => {
+        getallminreq();
+    });
+    connection.on("MinRequirementsDeleted", (user, message) => {
+        getallminreq();
+    });
+    connection.on("MinRequirementsUpdated", (user, message) => {
+        getallminreq();
     });
 
     connection.onclose
@@ -294,5 +396,213 @@ function updatestudio() {
         .catch((error) => {
             console.error('Error:', error);
         });
+
+}
+//minreq
+function displayallallminreq() {
+    document.getElementById('allminreqarea').innerHTML = "";
+    allminreq.forEach(g => {
+
+        document.getElementById('allminreqarea').innerHTML += `<tr>
+        <td>${g.cpu}</td>
+        <td>${g.gpu}</td>
+        <td>${g.reqId}</td>
+
+        <td> <button type="button" onclick="deleteminreq(${g.reqId})">Delete</button> </td>
+        <td> <button type="button" onclick="showupdateminreq(${g.reqId})">Update</button> </td>
+        </tr>`;
+
+
+
+    })
+}
+function createminreq() {
+    let minreqcpu = document.getElementById('createminreqcpu').value;
+    let minreqgpu = document.getElementById('createminreqgpu').value;
+    fetch('http://localhost:60949/MinRequirements', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(
+            {
+
+                cpu: minreqcpu,
+                gpu: minreqgpu
+
+            }),
+    })
+        .then(response => response)
+        .then(data => {
+            console.log('Success:', data);
+            getallminreq();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+function deleteminreq(id) {
+    fetch('http://localhost:60949/MinRequirements/' + id, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: null
+    })
+        .then(response => response)
+        .then(data => {
+            console.log('Success:', data);
+            getallminreq();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+function showupdateminreq(id) {
+    document.getElementById('updateminreqcpu').value = allminreq.find(t => t['reqId'] == id)['cpu'];
+    document.getElementById('updateminreqgpu').value = allminreq.find(t => t['reqId'] == id)['gpu'];
+
+    document.getElementById('minrequpdateform').style.display = 'inline';
+    minreqIdtoUpdate = id;
+}
+function updateminreq() {
+
+    document.getElementById('minrequpdateform').style.display = 'none';
+    let cpu= document.getElementById('updateminreqcpu').value;
+    let gpu = document.getElementById('updateminreqgpu').value;
+
+    fetch('http://localhost:60949/MinRequirements', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(
+            {
+                reqId: minreqIdtoUpdate,
+                cpu: cpu,
+                gpu: gpu
+
+            }),
+    })
+        .then(response => response)
+        .then(data => {
+            console.log('Success:', data);
+            getallminreq();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+//noncrud
+function displayallGamesWithRequirements() {
+
+    getallGamesWithRequirements();
+    document.getElementById('noncrudshow').innerHTML = "";
+    document.getElementById('nameofnoncrud').innerHTML = 'Games with Requirements'
+    allGamesWithRequirements.forEach(g => {
+
+        document.getElementById('noncrudshow').innerHTML += `<tr>
+        <td>${g}</td>
+
+       
+        </tr>`;
+
+
+
+    })
+}
+function displayallallGamesWithStudiosAndRequirements() {
+    getallGamesWithStudiosAndRequirements();
+    document.getElementById('noncrudshow').innerHTML = "";
+    document.getElementById('nameofnoncrud').innerHTML = 'Games With Studios And Requirements'
+    allGamesWithStudiosAndRequirements.forEach(g => {
+
+        document.getElementById('noncrudshow').innerHTML += `<tr>
+        <td>${g}</td>
+
+       
+        </tr>`;
+
+
+
+    })
+}
+function displayallallGamesWithStudios() {
+    getallGameWithStudios();
+    
+    document.getElementById('noncrudshow').innerHTML = "";
+    document.getElementById('nameofnoncrud').innerHTML = 'Games with studios'
+    allGamesWithStudios.forEach(g => {
+
+        document.getElementById('noncrudshow').innerHTML += `<tr>
+        <td>${g}</td>
+
+       
+        </tr>`;
+
+
+
+    })
+
+}
+function displayallGamesWithThisStudio() {
+
+    document.getElementById('noncrudshow').innerHTML = "";
+    document.getElementById('nameofnoncrud').innerHTML = 'Games with this studio'
+    let stud = document.getElementById('cstudio').value;
+
+    getallGamesWithThisStudio(stud);
+
+    allGamesWithThisStudio.forEach(g => {
+
+        document.getElementById('noncrudshow').innerHTML += `<tr>
+        <td>${g.name}</td>
+        
+        </tr>`;
+
+
+
+    })
+}
+function displayallGamesWithThisYear() {
+
+    document.getElementById('noncrudshow').innerHTML = "";
+    document.getElementById('nameofnoncrud').innerHTML = 'Games with this year'
+    let year = document.getElementById('cyear').value;
+
+    getallGamesWithThisYear(year);
+
+    allGamesWithThisYear.forEach(g => {
+
+        document.getElementById('noncrudshow').innerHTML += `<tr>
+        <td>${g.name}</td>
+        
+        </tr>`;
+
+
+
+    })
+
+
+}
+function displayallGamesWithThisCPU() {
+
+    document.getElementById('noncrudshow').innerHTML = "";
+    document.getElementById('nameofnoncrud').innerHTML = 'Games with this CPU'
+    let cpu = document.getElementById('ccpu').value;
+
+    getallGamesWithThisCPU(cpu);
+
+    allGamesWithThisCPU.forEach(g => {
+
+        document.getElementById('noncrudshow').innerHTML += `<tr>
+        <td>${g.name}</td>
+        
+        </tr>`;
+
+
+
+    })
+
 
 }

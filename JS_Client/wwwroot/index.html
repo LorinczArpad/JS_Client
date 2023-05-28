@@ -103,7 +103,70 @@
         <tbody id="allstudiosarea">
         </tbody>
     </table>
+    <br />
 
+    <div id="minreqcreatorform">
+        <Label>CPU: </Label>
+        <input type="text" id="createminreqcpu">
+
+        <br />
+        <Label>GPU: </Label>
+        <input type="text" id="createminreqgpu">
+
+
+        <button type="button" onclick="createminreq()">Create Record</button>
+
+
+    </div>
+    <div id="minrequpdateform">
+        <Label>CPU: </Label>
+        <input type="text" id="updateminreqcpu">
+
+        <br />
+        <Label>GPU: </Label>
+        <input type="text" id="updateminreqgpu">
+
+
+        <button type="button" onclick="updateminreq()">Update Record</button>
+
+
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>CPU</th>
+                <th>GPU</th>
+                <th>ID</th>
+
+            </tr>
+        </thead>
+        <tbody id="allminreqarea">
+        </tbody>
+    </table>
+    <br />
+
+    <button type="button" onclick="displayallGamesWithRequirements()">Show games with requirements </button>
+    <button type="button" onclick="displayallallGamesWithStudiosAndRequirements()">Show games with studios and requirements</button>
+    <button type="button" onclick="displayallallGamesWithStudios()"> Show games with studios</button>
+    <br />
+    <input type="text" id="cstudio"><button type="button" onclick="displayallGamesWithThisStudio()">Show games with this studio</button>
+    <br />
+    <input type="text" id="cyear"><button type="button" onclick="displayallGamesWithThisYear()">Show games with this realise year</button>
+    <br />
+    <input type="text" id="ccpu"><button type="button" onclick="displayallGamesWithThisCPU()">Show games with this CPU</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th id="nameofnoncrud"></th>
+
+
+            </tr>
+        </thead>
+        <tbody id="noncrudshow">
+        </tbody>
+    </table>
 
 
 
