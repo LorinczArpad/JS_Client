@@ -18,6 +18,7 @@ getallminreq();
 setupSingalR();
 
 
+    
 
 async function getallminreq() {
     await fetch('http://localhost:60949/MinRequirements')
@@ -432,4 +433,4 @@ function updateminreq() {
             console.error('Error:', error);
         });
 }
-//noncrud
+

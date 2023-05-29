@@ -6,7 +6,9 @@ let allGamesWithStudios = [];
 let allGamesWithThisStudio = [];
 let allGamesWithThisYear = [];
 let allGamesWithThisCPU = [];
-
+let schgame;
+var schstudio;
+var schminreq;
 
 
 
@@ -77,6 +79,46 @@ async function getallGamesWithThisYear(year) {
 }
 
 
+async function getgamebyid(id) {
+
+
+    await fetch('http://localhost:60949/game/' + id)
+        .then(x => x.json())
+        .then(y => {
+            schgame = y;
+            console.log(schgame);
+            
+        });
+
+
+
+}
+async function getstudiobyid(id) {
+
+
+    await fetch('http://localhost:60949/studio/' + id)
+        .then(x => x.json())
+        .then(y => {
+            schstudio = y;
+            console.log(schstudio);
+           
+        });
+
+
+}
+async function getminreqbyid(id) {
+
+    await fetch('http://localhost:60949/MinRequirements/' + id)
+        .then(x => x.json())
+        .then(y => {
+            schminreq = y;
+            console.log(schminreq);
+            
+        });
+
+
+}
+
 
 
 
@@ -87,9 +129,10 @@ async function getallGamesWithThisYear(year) {
 
 function displayallGamesWithRequirements() {
 
-    getallGamesWithRequirements();
+    
     document.getElementById('noncrudshow').innerHTML = "";
     document.getElementById('nameofnoncrud').innerHTML = 'Games with Requirements'
+    getallGamesWithRequirements();
     allGamesWithRequirements.forEach(g => {
 
         document.getElementById('noncrudshow').innerHTML += `<tr>
@@ -196,4 +239,37 @@ function displayallGamesWithThisCPU() {
     })
 
 
+}
+function displaygamebyid() {
+    
+    id = document.getElementById('sgame').value;
+    getgamebyid(id);
+    document.getElementById('noncrudshow').innerHTML = "";
+    document.getElementById('nameofnoncrud').innerHTML = 'Games with this ID: ' + id;
+    document.getElementById('noncrudshow').innerHTML += `<tr>
+        <td>${schgame.name}</td>
+        
+        </tr>`;
+}
+function displaystudioyid() {
+
+    id = document.getElementById('sstudio').value;
+    getstudiobyid(id);
+    document.getElementById('noncrudshow').innerHTML = "";
+    document.getElementById('nameofnoncrud').innerHTML = 'Studio with this ID: ' + id;
+    document.getElementById('noncrudshow').innerHTML += `<tr>
+        <td>${schstudio.name}</td>
+        
+        </tr>`;
+}
+function displayminreqbyid() {
+
+    id = document.getElementById('sminreq').value;
+    getminreqbyid(id);
+    document.getElementById('noncrudshow').innerHTML = "";
+    document.getElementById('nameofnoncrud').innerHTML = 'MinimalRequirements with this ID: ' + id;
+    document.getElementById('noncrudshow').innerHTML += `<tr>
+        <td>${schminreq.cpu} ${schminreq.gpu}</td>
+        
+        </tr>`;
 }
